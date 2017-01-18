@@ -3,17 +3,18 @@
 TEMP_OUTPUT="output.tmp"
 INPUT_FILE=$1
 OUTPUT_FILE=$2
-ASSIGNMENT_CLASS="Solution"
+ASSIGNMENT_FILE=${3:-"Solution.java"}
+ASSIGNMENT_CLASS="${ASSIGNMENT_FILE%.*}"
 
-echo "Cleaning ..."
-echo "----------------------------------------"
-rm -rf $ASSIGNMENT_CLASS.class $TEMP_OUTPUT 2> /dev/null
-echo "Cleaned!"
+function silentlyCleanOutput {
+  rm -rf *.class *.tmp 2> /dev/null
+}
 
-echo
-echo "Compiling ..."
+silentlyCleanOutput
+
+echo "Compiling $ASSIGNMENT_FILE..."
 echo "----------------------------------------"
-javac $ASSIGNMENT_CLASS.java
+javac $ASSIGNMENT_FILE
 
 STATUS=$?
 if [ $STATUS -ne 0 ]; then
@@ -24,7 +25,7 @@ else
 fi
 
 echo
-echo "Running ..."
+echo "Running $ASSIGNMENT_CLASS ..."
 echo "----------------------------------------"
 time cat $INPUT_FILE | java -cp . $ASSIGNMENT_CLASS | tee $TEMP_OUTPUT
 
@@ -32,6 +33,8 @@ echo
 echo "Checking output ..."
 echo "----------------------------------------"
 diff $TEMP_OUTPUT <(cat $OUTPUT_FILE)
+
+silentlyCleanOutput
 
 STATUS=$?
 if [ $STATUS -ne 0 ]; then
