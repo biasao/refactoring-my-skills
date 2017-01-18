@@ -1,10 +1,27 @@
 #!/usr/bin/env bash
 
+display_usage() {
+  echo
+	echo "Usage: runner-java.sh [-h, --help] <input file> <output file> [java file]\n"
+  echo
+}
+
+if [  $# -le 1 ]
+then
+	display_usage
+	exit 1
+fi
+
+if [[ ( $1 == "--help") ||  $1 == "-h" ]]
+then
+	display_usage
+	exit 0
+fi
+
 TEMP_OUTPUT="output.tmp"
 INPUT_FILE=$1
 OUTPUT_FILE=$2
-PARAMETER_FILE=$(basename $3)
-ASSIGNMENT_FILE=${PARAMETER_FILE:-"Solution.java"}
+ASSIGNMENT_FILE=$(basename ${3:-"Solution.java"})
 ASSIGNMENT_CLASS="${ASSIGNMENT_FILE%.*}"
 
 function silentlyCleanOutput {
