@@ -1,6 +1,6 @@
 # Refactoring my skills
 
-This repository contains the source code related to my studies of Algorithms, Data Structures, Java, etc. I'm currently working to refactor my skills, and my goal here is to become a better professional, by reviewing the basic Computer Science that I learnt on the University (Long time ago :-) ).
+This repository contains the source code related to my studies of Algorithms, Data Structures, Java, etc. I'm currently working to refactor my skills, and my goal here is to become a better professional, by reviewing the basic Computer Science that I learnt at the University (a long long time ago, in a galaxy far far away ... ).
 
 The repository contains 3 sections:
 
