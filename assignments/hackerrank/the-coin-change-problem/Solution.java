@@ -14,82 +14,58 @@ public class Solution {
             coins[i] = scanner.nextInt();
         }
 
-        long ways = calculateNumberOfWaysToProvideChangeFor(change, coins);
+        long ways = calculateNumberOfWaysToProvideChangeFor(change, coins, coins.length);
         System.out.println(ways);
     }
 
-    private static long calculateNumberOfWaysToProvideChangeFor(int change, int[] coins) {
-        if (coins.length == 0) {
+    private static long calculateNumberOfWaysToProvideChangeFor(int change, int[] coins, int numberOfCoins) {
+        if (isMemoized(change, numberOfCoins)) {
             return 0;
         }
 
-        if (isMemoized(change, coins)) {
+        if (change == 0) {
+            return 1;
+        }
+
+        if (change < 0) {
             return 0;
         }
 
-        long ways = 0;
-        memoize(change, coins);
-
-        if (coins.length == 1) {
-            int sum = 0;
-            int counter = 1;
-            do {
-                sum = coins[0] * counter;
-                if (sum == change) {
-                    ways += 1;
-                } else {
-                    counter++;
-                }
-            } while (sum < change);
-        } else {
-            int sum = Arrays.stream(coins).sum();
-            if (sum == change) {
-                ways += 1;
-            } else if (sum < change) {
-                // sum < change
-                int diff = change - sum;
-                int[] possibleCoins = Arrays.stream(coins).filter(e -> e <= diff).toArray();
-                ways += calculateNumberOfWaysToProvideChangeFor(diff, possibleCoins);
-            }
+        if (numberOfCoins <= 0 && change > 0) {
+            return 0;
         }
 
-        for (int i = 0; i < coins.length; i++) {
-            final int currentCoin = coins[i];
-            int[] coinsSubset = Arrays.stream(coins).filter(e -> e != currentCoin).toArray();
-            ways += calculateNumberOfWaysToProvideChangeFor(change, coinsSubset);
-        }
-
-        return ways;
+        return calculateNumberOfWaysToProvideChangeFor(change, coins, numberOfCoins - 1) + calculateNumberOfWaysToProvideChangeFor(change - coins[numberOfCoins - 1], coins, numberOfCoins);
     }
 
     private static class Memo {
         private int change;
-        private int[] coins;
+        private int numberOfCoins;
 
-        public Memo(int change, int[] coins) {
+        public Memo(int change, int numberOfCoins) {
             this.change = change;
-            this.coins = coins;
+            this.numberOfCoins = numberOfCoins;
         }
 
         @Override
         public int hashCode() {
-            return change + Arrays.hashCode(coins);
+            return change + numberOfCoins;
         }
 
         @Override
         public boolean equals(Object other) {
             Memo otherMemo = (Memo) other;
-            return otherMemo.hashCode() == hashCode();
+            return otherMemo.change == change && otherMemo.numberOfCoins == numberOfCoins;
         }
     }
 
     private static Set<Memo> memos = new HashSet<>();
 
-    private static void memoize(int change, int[] coins) {
-        memos.add(new Memo(change, coins));
+    private static void memoize(int change, int numberOfCoins) {
+        memos.add(new Memo(change, numberOfCoins));
     }
 
-    private static boolean isMemoized(int change, int[] coins) {
-        return memos.contains(new Memo(change, coins));
+    private static boolean isMemoized(int change, int numberOfCoins) {
+        return memos.contains(new Memo(change, numberOfCoins));
     }
 }
