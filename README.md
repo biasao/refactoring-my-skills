@@ -23,17 +23,18 @@ cd assignments/hackerrank/the-coin-change-problem
 You should see the following output:
 
 ```
-Cleaning ...
-----------------------------------------
-Cleaned!
-
-Compiling ...
+╰─$ ../../../tools/runner-java.sh input1.txt output1.txt
+Compiling Solution.java ...
 ----------------------------------------
 Code compiled!
 
-Running ...
+Running Solution ...
 ----------------------------------------
 4
+
+real	0m0.142s
+user	0m0.126s
+sys	0m0.037s
 
 Checking output ...
 ----------------------------------------
