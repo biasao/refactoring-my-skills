@@ -14,13 +14,28 @@ public class Solution {
             coins[i] = scanner.nextInt();
         }
 
+        memos = new long[change+1][coins.length+1];
         long ways = calculateNumberOfWaysToProvideChangeFor(change, coins, coins.length);
         System.out.println(ways);
     }
 
+    private static long[][] memos;
+
+    private static void memoize(int change, int numberOfCoins, long result) {
+        memos[change][numberOfCoins] = result;
+    }
+
+    private static boolean isMemoized(int change, int numberOfCoins) {
+        if (change < 0 || numberOfCoins < 0) {
+            return false;
+        }
+
+        return memos[change][numberOfCoins] != 0;
+    }
+
     private static long calculateNumberOfWaysToProvideChangeFor(int change, int[] coins, int numberOfCoins) {
         if (isMemoized(change, numberOfCoins)) {
-            return 0;
+            return memos[change][numberOfCoins];
         }
 
         if (change == 0) {
@@ -35,37 +50,9 @@ public class Solution {
             return 0;
         }
 
-        return calculateNumberOfWaysToProvideChangeFor(change, coins, numberOfCoins - 1) + calculateNumberOfWaysToProvideChangeFor(change - coins[numberOfCoins - 1], coins, numberOfCoins);
-    }
+        long result = calculateNumberOfWaysToProvideChangeFor(change, coins, numberOfCoins - 1) + calculateNumberOfWaysToProvideChangeFor(change - coins[numberOfCoins - 1], coins, numberOfCoins);
+        memoize(change, numberOfCoins, result);
 
-    private static class Memo {
-        private int change;
-        private int numberOfCoins;
-
-        public Memo(int change, int numberOfCoins) {
-            this.change = change;
-            this.numberOfCoins = numberOfCoins;
-        }
-
-        @Override
-        public int hashCode() {
-            return change + numberOfCoins;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            Memo otherMemo = (Memo) other;
-            return otherMemo.change == change && otherMemo.numberOfCoins == numberOfCoins;
-        }
-    }
-
-    private static Set<Memo> memos = new HashSet<>();
-
-    private static void memoize(int change, int numberOfCoins) {
-        memos.add(new Memo(change, numberOfCoins));
-    }
-
-    private static boolean isMemoized(int change, int numberOfCoins) {
-        return memos.contains(new Memo(change, numberOfCoins));
+        return result;
     }
 }
