@@ -5,26 +5,20 @@ import java.util.stream.*;
 public class Solution {
 
     /**
-     * Non-optimal solution.
-     * Time Complexity -> O(n2)
-     * Space Complexity -> O(1)
+     * Optimal solution (at least I think it is optimal, still need to evaluate the complexity of substring and streams).
+     * Time Complexity -> O(n)
+     * Space Complexity -> O(n)
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int size = scanner.nextInt();
-        int hashes = size;
+
+        String stringSpace = Stream.generate(() -> String.valueOf(' ')).limit(size).collect(Collectors.joining());
+        String stringHash = Stream.generate(() -> String.valueOf('#')).limit(size).collect(Collectors.joining());
 
         for (int i = 1; i <= size; i++) {
-            for (int j = 1; j <= size; j++) {
-                if (j < hashes) {
-                  System.out.print(" ");
-                } else {
-                  System.out.print("#");
-                }
-            }
-
-            System.out.println();
-            hashes--;
+            System.out.print(stringSpace.substring(0, size - i));
+            System.out.println(stringHash.substring(0, i));
         }
     }
 }
