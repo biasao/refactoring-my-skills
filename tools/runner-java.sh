@@ -52,9 +52,9 @@ echo "Checking output ..."
 echo "----------------------------------------"
 diff $TEMP_OUTPUT <(cat $OUTPUT_FILE)
 
+STATUS=$?
 silentlyCleanOutput
 
-STATUS=$?
 if [ $STATUS -ne 0 ]; then
   echo "Test failed! Please check the diff output." >&2
   exit $STATUS
