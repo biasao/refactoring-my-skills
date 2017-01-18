@@ -26,7 +26,7 @@ fi
 echo
 echo "Running ..."
 echo "----------------------------------------"
-cat $INPUT_FILE | java -cp . $ASSIGNMENT_CLASS | tee $TEMP_OUTPUT
+time cat $INPUT_FILE | java -cp . $ASSIGNMENT_CLASS | tee $TEMP_OUTPUT
 
 echo
 echo "Checking output ..."
