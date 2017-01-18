@@ -3,7 +3,8 @@
 TEMP_OUTPUT="output.tmp"
 INPUT_FILE=$1
 OUTPUT_FILE=$2
-ASSIGNMENT_FILE=${3:-"Solution.java"}
+PARAMETER_FILE=$(basename $3)
+ASSIGNMENT_FILE=${PARAMETER_FILE:-"Solution.java"}
 ASSIGNMENT_CLASS="${ASSIGNMENT_FILE%.*}"
 
 function silentlyCleanOutput {
@@ -12,7 +13,7 @@ function silentlyCleanOutput {
 
 silentlyCleanOutput
 
-echo "Compiling $ASSIGNMENT_FILE..."
+echo "Compiling $ASSIGNMENT_FILE ..."
 echo "----------------------------------------"
 javac $ASSIGNMENT_FILE
 
