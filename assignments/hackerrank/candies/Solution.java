@@ -13,19 +13,14 @@ public class Solution {
     }
 
     long candiesToBuy = 0;
-    long numberOfCandiesToStudent = 1;
+    int numberOfCandiesToStudent = 1;
     for (int student = 0; student < numberOfStudents; student++) {
       int previousStudent = student - 1;
       int nextStudent = student + 1;
       if (previousStudent >= 0 && rates[student] > rates[previousStudent]) {
         numberOfCandiesToStudent++;
       } else if (previousStudent >= 0 && rates[student] <= rates[previousStudent]) {
-        // TODO Recursively calculate the next number of candies.
-        if (nextStudent < numberOfStudents && rates[student] > rates[nextStudent]) {
-          numberOfCandiesToStudent = 2;
-        } else {
-          numberOfCandiesToStudent = 1;
-        }
+        numberOfCandiesToStudent = calculateNumberOfCandiesToStudentRecursively(numberOfCandiesToStudent, numberOfStudents, nextStudent, student, rates);
       } else if (nextStudent < numberOfStudents && rates[student] > rates[nextStudent]) {
         numberOfCandiesToStudent++;
       }
@@ -39,6 +34,14 @@ public class Solution {
     }
 
     System.out.println(candiesToBuy);
+  }
+
+  private static int calculateNumberOfCandiesToStudentRecursively(int numberOfCandiesToStudent, int numberOfStudents, int nextStudent, int student, int[] rates) {
+    if (nextStudent < numberOfStudents && rates[student] > rates[nextStudent]) {
+      return calculateNumberOfCandiesToStudentRecursively(numberOfCandiesToStudent, numberOfStudents, nextStudent + 1, nextStudent, rates) + 1;
+    } else {
+      return 1;
+    }
   }
 
 }
