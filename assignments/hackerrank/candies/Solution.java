@@ -26,6 +26,7 @@ public class Solution {
       }
 
       if (numberOfCandiesToStudent <= 0) {
+        //candiesToBuy += Math.abs(numberOfCandiesToStudent);
         numberOfCandiesToStudent = 1;
       }
 
