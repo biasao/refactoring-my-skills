@@ -25,12 +25,7 @@ public class Solution {
         numberOfCandiesToStudent++;
       }
 
-      if (numberOfCandiesToStudent <= 0) {
-        //candiesToBuy += Math.abs(numberOfCandiesToStudent);
-        numberOfCandiesToStudent = 1;
-      }
-
-      //System.out.println("rate -> " + rates[student] + ", candies -> " + numberOfCandiesToStudent);
+      System.out.println("rate -> " + rates[student] + ", candies -> " + numberOfCandiesToStudent);
       candiesToBuy += numberOfCandiesToStudent;
     }
 
@@ -39,9 +34,11 @@ public class Solution {
 
   private static int calculateNumberOfCandiesToStudentRecursively(int numberOfCandiesToStudent, int numberOfStudents, int nextStudent, int student, int[] rates) {
     if (nextStudent < numberOfStudents && rates[student] > rates[nextStudent]) {
-      return calculateNumberOfCandiesToStudentRecursively(numberOfCandiesToStudent, numberOfStudents, nextStudent + 1, nextStudent, rates) + 1;
-    } else {
+      return 1 + calculateNumberOfCandiesToStudentRecursively(numberOfCandiesToStudent, numberOfStudents, nextStudent + 1, nextStudent, rates);
+    } else if (numberOfCandiesToStudent > 0) {
       return 1;
+    } else {
+      return 1 + Math.abs(numberOfCandiesToStudent);
     }
   }
 
