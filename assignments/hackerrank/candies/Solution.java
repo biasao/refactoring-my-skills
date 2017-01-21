@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Solution {
 
-  private static final boolean DEBUG = false;
+  private static final boolean DEBUG = true;
 
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
@@ -56,7 +56,7 @@ public class Solution {
     // valley
     if (rates[student] <= rates[previousStudent] && rates[student] < rates[nextStudent]) {
       debug("valley");
-      return numberOfCandiesToStudent > 0 ? 1 : 1 + Math.abs(numberOfCandiesToStudent);
+      return 1;
     }
 
     // climbing up
@@ -88,6 +88,7 @@ public class Solution {
                   nextStudent + 1,
                   nextStudent,
                   rates);
+    debug("candiesForNext -> " + candiesForNext + ", numberOfCandiesToStudent -> "+ numberOfCandiesToStudent);
     return candiesForNext > numberOfCandiesToStudent ? ++candiesForNext : ++numberOfCandiesToStudent;
   }
 
