@@ -45,7 +45,7 @@ fi
 echo
 echo "Running $ASSIGNMENT_CLASS ..."
 echo "----------------------------------------"
-time cat $INPUT_FILE | java -Xss128m -cp . $ASSIGNMENT_CLASS | tee $TEMP_OUTPUT
+time cat $INPUT_FILE | java -Xss32m -cp . $ASSIGNMENT_CLASS | tee $TEMP_OUTPUT
 
 echo
 echo "Checking output ..."
