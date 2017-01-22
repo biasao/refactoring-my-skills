@@ -19,7 +19,7 @@ public class Solution {
     for (int student = 0; student < numberOfStudents; student++) {
       int previousStudent = student - 1;
       int nextStudent = student + 1;
-      //debug("rate -> " + rates[student]);
+      debug("rate -> " + rates[student]);
       numberOfCandiesToStudent = calculateNumberOfCandiesToStudentRecursively(
                                     numberOfCandiesToStudent,
                                     numberOfStudents,
@@ -29,7 +29,7 @@ public class Solution {
                                     rates);
 
       debug("rate -> " + rates[student] + ", candies -> " + numberOfCandiesToStudent);
-      //debug("----------------------------------------");
+      debug("----------------------------------------");
       candiesToBuy += numberOfCandiesToStudent;
     }
 
@@ -45,38 +45,32 @@ public class Solution {
       int[] rates) {
     // lower boundary
     if (previousStudent < 0) {
-      //debug("lower boundary");
+      debug("lower boundary");
       return rates[student] <= rates[nextStudent] ? 1 : 2;
     }
 
     // higher boundary
     if (nextStudent >= numberOfStudents) {
-      //debug("higher boundary");
+      debug("higher boundary");
       return rates[student] <= rates[previousStudent] ? 1 : numberOfCandiesToStudent + 1;
     }
 
-    // valley
-    if (rates[student] <= rates[previousStudent] && rates[student] < rates[nextStudent]) {
-      //debug("valley");
-      return 1;
-    }
-
-    // equal
-    if (rates[student] <= rates[previousStudent] && rates[student] == rates[nextStudent]) {
-      //debug("equal");
+    // valley or equal
+    if (rates[student] <= rates[previousStudent] && rates[student] <= rates[nextStudent]) {
+      debug("valley or equal");
       return 1;
     }
 
     // climbing up
-    if (rates[student] > rates[previousStudent] && rates[student] < rates[nextStudent]) {
-      //debug("climbing up");
+    if (rates[student] >= rates[previousStudent] && rates[student] <= rates[nextStudent]) {
+      debug("climbing up");
       numberOfCandiesToStudent += 1;
       return numberOfCandiesToStudent;
     }
 
     // climbing down
     if (rates[student] <= rates[previousStudent] && rates[student] >= rates[nextStudent]) {
-      //debug("climbing down");
+      debug("climbing down");
       numberOfCandiesToStudent -= 1;
       return 1 + calculateNumberOfCandiesToStudentRecursively(
                     numberOfCandiesToStudent,
@@ -88,7 +82,7 @@ public class Solution {
     }
 
     // hill
-    //debug("hill");
+    debug("hill");
     int candiesForNext = calculateNumberOfCandiesToStudentRecursively(
                   numberOfCandiesToStudent,
                   numberOfStudents,
@@ -96,7 +90,7 @@ public class Solution {
                   nextStudent + 1,
                   nextStudent,
                   rates);
-    //debug("candiesForNext -> " + candiesForNext + ", numberOfCandiesToStudent -> "+ numberOfCandiesToStudent);
+    debug("candiesForNext -> " + candiesForNext + ", numberOfCandiesToStudent -> "+ numberOfCandiesToStudent);
     return candiesForNext > numberOfCandiesToStudent ? ++candiesForNext : ++numberOfCandiesToStudent;
   }
 
