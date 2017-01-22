@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Solution {
 
-  private static final boolean DEBUG = true;
+  private static final boolean DEBUG = false;
 
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
