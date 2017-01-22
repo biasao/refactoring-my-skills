@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Solution {
 
-  private static final boolean DEBUG = false;
+  private static final boolean DEBUG = true;
 
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
@@ -19,6 +19,7 @@ public class Solution {
     for (int student = 0; student < numberOfStudents; student++) {
       int previousStudent = student - 1;
       int nextStudent = student + 1;
+      //debug("rate -> " + rates[student]);
       numberOfCandiesToStudent = calculateNumberOfCandiesToStudentRecursively(
                                     numberOfCandiesToStudent,
                                     numberOfStudents,
@@ -28,6 +29,7 @@ public class Solution {
                                     rates);
 
       debug("rate -> " + rates[student] + ", candies -> " + numberOfCandiesToStudent);
+      //debug("----------------------------------------");
       candiesToBuy += numberOfCandiesToStudent;
     }
 
@@ -44,7 +46,7 @@ public class Solution {
     // lower boundary
     if (previousStudent < 0) {
       //debug("lower boundary");
-      return rates[student] < rates[nextStudent] ? 1 : 2;
+      return rates[student] <= rates[nextStudent] ? 1 : 2;
     }
 
     // higher boundary
@@ -59,8 +61,14 @@ public class Solution {
       return 1;
     }
 
+    // equal
+    if (rates[student] <= rates[previousStudent] && rates[student] == rates[nextStudent]) {
+      //debug("equal");
+      return 1;
+    }
+
     // climbing up
-    if (rates[student] > rates[previousStudent] && rates[student] <= rates[nextStudent]) {
+    if (rates[student] > rates[previousStudent] && rates[student] < rates[nextStudent]) {
       //debug("climbing up");
       numberOfCandiesToStudent += 1;
       return numberOfCandiesToStudent;
