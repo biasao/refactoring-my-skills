@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+display_usage() {
+  echo
+	echo "Usage: runner-java.sh [-h, --help]  <output file> [java file]\n"
+  echo
+}
+
+if [  $# -le 0 ]
+then
+	display_usage
+	exit 1
+fi
+
+if [[ ( $1 == "--help") ||  $1 == "-h" ]]
+then
+	display_usage
+	exit 0
+fi
+
+TEMP_OUTPUT="output.tmp"
+OUTPUT_FILE=$1
+ASSIGNMENT_FILE=$(basename ${2:-"Solution.java"})
+ASSIGNMENT_CLASS="${ASSIGNMENT_FILE%.*}"
+
+function silentlyCleanOutput {
+  rm -rf *.class *.tmp 2> /dev/null
+}
+
+silentlyCleanOutput
+
+echo "Compiling $ASSIGNMENT_FILE ..."
+echo "----------------------------------------"
+javac $ASSIGNMENT_FILE
+
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  echo "Error compiling the source code."
+  exit $STATUS
+else
+  echo "Code compiled!"
+fi
+
+echo
+echo "Running $ASSIGNMENT_CLASS ..."
+echo "----------------------------------------"
+time java -Xss32m -cp . $ASSIGNMENT_CLASS | tee $TEMP_OUTPUT
+
+echo
+echo "Checking output ..."
+echo "----------------------------------------"
+diff $TEMP_OUTPUT <(cat $OUTPUT_FILE)
+
+STATUS=$?
+silentlyCleanOutput
+
+if [ $STATUS -ne 0 ]; then
+  echo "Test failed! Please check the diff output." >&2
+  exit $STATUS
+else
+  echo "Test passed!"
+  exit 0
+fi
