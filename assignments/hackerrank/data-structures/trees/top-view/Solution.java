@@ -66,7 +66,7 @@ public class Solution {
         }
 
         Deque<Node> leftStack = new LinkedList<>();
-        Deque<Node> rightStack = new LinkedList<>();
+        Deque<Node> rightDeque = new LinkedList<>();
 
         Node current = root.left;
         while (current != null) {
@@ -76,7 +76,7 @@ public class Solution {
 
         current = root.right;
         while (current != null) {
-            rightStack.addLast(current);
+            rightDeque.addLast(current);
             current = current.right;
         }
 
@@ -87,8 +87,8 @@ public class Solution {
 
         System.out.format("%d ", root.data);
 
-        while (rightStack.size() > 0) {
-            Node node = rightStack.removeFirst();
+        while (rightDeque.size() > 0) {
+            Node node = rightDeque.removeFirst();
             System.out.format("%d ", node.data);
         }
     }
