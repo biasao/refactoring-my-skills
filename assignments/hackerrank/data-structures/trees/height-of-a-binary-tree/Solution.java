@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Solution {
 
-    // In-order
+    // Tree
     //       3
     //    /    \
     //   2     5
