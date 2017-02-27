@@ -6,7 +6,7 @@ display_usage() {
   echo
 }
 
-if [  $# -le 0 ]
+if [ $# -le 0 ]
 then
 	display_usage
 	exit 1
