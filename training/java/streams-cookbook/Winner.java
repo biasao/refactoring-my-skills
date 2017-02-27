@@ -45,7 +45,6 @@ public class Winner {
                                                         .filter(d -> d.getLengthKm() < 3500) // Separate out Tours less than 3500km
                                                         .map(Winner::getName) // Get names of winners
                                                         .collect(toList()); // Converts from stream to list
-
         System.out.println("Winners of Tours Less than 3500km - " + winnersOfToursLessThan3500km);
 
         List<String> winnersOfToursGreaterThan3500km = tdfWinners
@@ -53,7 +52,6 @@ public class Winner {
                                                             .filter(d -> d.getLengthKm() >= 3500)
                                                             .map(Winner::getName)
                                                             .collect(toList());
-
         System.out.println("Winners of Tours Greater than 3500km - " + winnersOfToursGreaterThan3500km);
 
         // limit -
@@ -62,7 +60,6 @@ public class Winner {
                                                                     .filter(d -> d.getLengthKm() < 3500)
                                                                     .limit(2)
                                                                     .collect(toList());
-
         System.out.println("winnerObjectsOfToursLessThan3500kmLimit2 " + winnerObjectsOfToursLessThan3500kmLimit2);
 
         List<String> firstTwoWinnersOfToursLessThan3500km = winnerObjectsOfToursLessThan3500kmLimit2
@@ -70,8 +67,24 @@ public class Winner {
                                                                 .map(Winner::getName)
                                                                 .limit(2)
                                                                 .collect(toList());
-
         System.out.println("firstTwoWinnersOfToursLessThan3500km - " + firstTwoWinnersOfToursLessThan3500km);
+
+        // filter by distinct
+        List<String> distinctTDFWinners = tdfWinners
+                                                .stream()
+                                                .map(Winner::getName)
+                                                .distinct()
+                                                .collect(toList());
+        System.out.println("distinctTDFWinners - " + distinctTDFWinners);
+
+        long numberOfDistinctWinners = tdfWinners
+                                            .stream()
+                                            .map(Winner::getName)
+                                            .distinct()
+                                            .count();
+        System.out.println("numberOfDistinctWinners - " + numberOfDistinctWinners);
+
+        
     }
 
     public double getAveSpeed() {
