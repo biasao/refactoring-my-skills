@@ -60,6 +60,20 @@ public class Solution {
                     new Node(9));
 
         System.out.println(lca(root, v1, v2).data);
+
+        v1 = 1;
+        v2 = 2;
+        root = new Node(4,
+                    new Node(2,
+                        new Node(1),
+                        new Node(3)),
+                    new Node(6,
+                        new Node(5),
+                        new Node(8,
+                            null,
+                            new Node(9))));
+
+        System.out.println(lca(root, v1, v2).data);
     }
 
     // Hackerrank solution starts here.
@@ -94,7 +108,7 @@ public class Solution {
            current = v2 <= current.data ? current.left : current.right;
 
            Node nodePathV1 = pathV1.get(i);
-           if (current != nodePathV1) {
+           if (current != nodePathV1 || v2 == current.data) {
                return pathV1.get(i - 1);
            }
        }
