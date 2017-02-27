@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+display_usage() {
+  echo
+	echo "Usage: runner.sh [-h, --help] [java file]\n"
+  echo
+}
+
+if [  $# -le 0 ]
+then
+	display_usage
+	exit 1
+fi
+
+if [[ ( $1 == "--help") ||  $1 == "-h" ]]
+then
+	display_usage
+	exit 0
+fi
+
+ASSIGNMENT_FILE=$(basename ${1:-"Solution.java"})
+ASSIGNMENT_CLASS="${ASSIGNMENT_FILE%.*}"
+
+function silentlyCleanOutput {
+  rm -rf *.class 2> /dev/null
+}
+
+silentlyCleanOutput
+
+echo "Compiling $ASSIGNMENT_FILE ..."
+echo "----------------------------------------"
+javac $ASSIGNMENT_FILE
+
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  echo "Error compiling the source code."
+  exit $STATUS
+else
+  echo "Code compiled!"
+fi
+
+echo
+echo "Running $ASSIGNMENT_CLASS ..."
+echo "----------------------------------------"
+time java -Xss32m -cp . $ASSIGNMENT_CLASS
+
+STATUS=$?
+silentlyCleanOutput
+
+exit $STATUS
