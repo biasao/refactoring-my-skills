@@ -30,6 +30,11 @@ public class Solution {
             this.left = left;
             this.right = right;
         }
+
+        @Override
+        public String toString() {
+            return String.valueOf(data);
+        }
     }
 
     public static void main(String[] args) {
@@ -85,35 +90,40 @@ public class Solution {
    */
 
    static Node lca(Node root, int v1, int v2) {
-       List<Node> pathV1 = new ArrayList<>();
+       List<Node> pathV1 = findAncestors(root, v1);
+       List<Node> pathV2 = findAncestors(root, v2);
+
+       int pathV1Size = pathV1.size();
+       int pathV2Size = pathV2.size();
+       int greatestPathSize = pathV1Size > pathV2Size ? pathV1Size : pathV2Size;
+       Node ancestor = root;
+
+       for (int i = 1; i < greatestPathSize; i++) {
+           if (i >= pathV1Size || i >= pathV2Size || (pathV1.get(i) != pathV2.get(i))) {
+               return ancestor;
+           }
+
+           ancestor = pathV1.get(i);
+       }
+
+       return ancestor;
+   }
+
+   static List<Node> findAncestors(Node root, int value) {
+       List<Node> path = new ArrayList<>();
        Node current = root;
 
-       // It is expected that all values are on the binary search tree.
        while (true) {
-           if (v1 == current.data) {
+           path.add(current);
+
+           if (value == current.data) {
                 break;
            }
 
-           pathV1.add(current);
-           current = v1 <= current.data ? current.left : current.right;
+           current = value <= current.data ? current.left : current.right;
        }
 
-       current = root;
-
-       for (int i = 1; i < pathV1.size(); i++) {
-           if (v2 == current.data) {
-               break;
-           }
-
-           current = v2 <= current.data ? current.left : current.right;
-
-           Node nodePathV1 = pathV1.get(i);
-           if (current != nodePathV1 || v2 == current.data) {
-               return pathV1.get(i - 1);
-           }
-       }
-
-       return current;
+       return path;
    }
 
 }
