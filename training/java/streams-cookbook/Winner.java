@@ -84,7 +84,67 @@ public class Winner {
                                             .count();
         System.out.println("numberOfDistinctWinners - " + numberOfDistinctWinners);
 
-        
+        // skip records
+        List<Winner> skipEveryOtherTDFWinner = tdfWinners
+                                                    .stream()
+                                                    .skip(2)
+                                                    .collect(toList());
+        System.out.println("skipEveryOtherTDFWinner - " + skipEveryOtherTDFWinner);
+
+        List<String> mapWinnerYearNameToList = tdfWinners
+                                                    .stream()
+                                                    .map(w -> w.getYear() + " - " + w.getName())
+                                                    .collect(toList());
+        System.out.println("mapWinnerYearNameToList - " + mapWinnerYearNameToList);
+
+        List<Integer> mapWinnerNameLengthToList = tdfWinners
+                                                        .stream()
+                                                        .map(Winner::getName)
+                                                        .map(String::length)
+                                                        .collect(toList());
+        System.out.println("mapWinnerNameLengthToList - " + mapWinnerNameLengthToList);
+
+        // matching - allMatch, noneMatch
+        Optional<Winner> winner2012 = tdfWinners.stream().filter(w -> w.getName().contains("Wiggins")).findAny();
+        System.out.println("winner2012 - " + winner2012.get());
+
+        Optional<Integer> winnerYear2014 = tdfWinners.stream().filter(w -> w.getYear() == 2014).map(Winner::getYear).findFirst();
+        System.out.println("winnerYear2014 - " + winnerYear2014.get());
+
+        // reducing - 0 --> initial value
+        int totalDistance = tdfWinners.stream().map(Winner::getLengthKm).reduce(0, Integer::sum);
+        System.out.println(String.format("totalDistance - %d", totalDistance));
+
+        Optional<Integer> shortestDistanceInAYear = tdfWinners.stream().map(Winner::getLengthKm).reduce(Integer::min);
+        System.out.println(String.format("shortestDistanceInAYear - %d", shortestDistanceInAYear.get()));
+
+        Optional<Integer> longestDistanceInAYear = tdfWinners.stream().map(Winner::getLengthKm).reduce(Integer::max);
+        System.out.println(String.format("longestDistanceInAYear - %d", longestDistanceInAYear.get()));
+
+        Optional<Winner> fastestWinner = tdfWinners.stream().min(Comparator.comparingDouble(Winner::getAveSpeed));
+        System.out.println(String.format("fastestWinner - %s", fastestWinner.get()));
+
+        // shorthand
+        OptionalDouble fastestAverageSpeed = tdfWinners.stream().mapToDouble(Winner::getAveSpeed).max();
+        System.out.println(String.format("fastestAverageSpeed - %f", fastestAverageSpeed.getAsDouble()));
+
+        // groupingby - make a map whose keys are names
+        Map<String, List<Winner>> namesVsWinner = tdfWinners.stream().collect(groupingBy(Winner::getName));
+        System.out.println("namesVsWinner - " + namesVsWinner);
+
+        // join strings
+        String allTDFWinnersTeamsCSV = tdfWinners.stream().map(Winner::getTeam).collect(joining(", "));
+        System.out.println(String.format("allTDFWinnersTeamsCSV - %s", allTDFWinnersTeamsCSV));
+
+        // grouping
+        Map<String, List<Winner>> winnersByNationality = tdfWinners.stream().collect(groupingBy(Winner::getNationality));
+        System.out.println("winnersByNationality - " + winnersByNationality);
+
+        Map<String, Long> winnersByNationalityCount = tdfWinners.stream().collect(groupingBy(Winner::getNationality, counting()));
+        System.out.println("winnersByNationalityCount - " + winnersByNationalityCount);
+
+        Map<String, Integer> winnersByNationalitySummingLength = tdfWinners.stream().collect(groupingBy(Winner::getNationality, summingInt(Winner::getLengthKm)));
+        System.out.println("winnersByNationalitySummingLength - " + winnersByNationalitySummingLength);
     }
 
     public double getAveSpeed() {
