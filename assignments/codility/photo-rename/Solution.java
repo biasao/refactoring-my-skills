@@ -25,7 +25,7 @@ public class Solution {
         // DONE 1. Split single input string in multiple strings.
         // DONE 2. Transform input from String to Photo objects.
         // DONE 2. Group by city, and sort each group by date/time.
-        // 3. Assign a unique sequential number to each file on the group.
+        // DONE 3. Assign a unique sequential number to each file on the group.
         //      - All sequential number should have the same number of digits.
         //      - i.e. if the last number is 10, all numbers should be 00, 01, 02, etc.
         // DONE 4. Implement toString() using the format "City" + "Sequential Number" + ".Extension".
