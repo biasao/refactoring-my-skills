@@ -1,0 +1,15 @@
+picture.jpg, Curitiba, 2014-10-06 14:08:15
+jones.png, São Paulo, 2016-07-21 15:13:22
+people.png, Curitiba, 2014-10-06 14:07:13
+monument.jpg, Passo Fundo, 2016-08-24 08:03:02
+place.jpg, Passo Fundo, 2016-08-23 23:59:59
+anotherplace.jpg, São Paulo, 2016-09-06 00:02:03
+something.png, Passo Fundo, 2016-10-02 12:00:00
+you.jpg, Curitiba, 2014-10-07 15:40:22
+p.png, Curitiba, 2017-03-14 13:33:50
+a.jpg, Curitiba, 2017-02-03 15:12:22
+r.jpg, Curitiba, 2017-02-03 14:34:30
+b.jpg, Curitiba, 2017-02-03 15:15:01
+n.png, Curitiba, 2017-02-03 09:49:09
+u.png, Curitiba, 2017-02-03 10:55:32
+e.jpg, Curitiba, 2017-03-30 22:13:11
