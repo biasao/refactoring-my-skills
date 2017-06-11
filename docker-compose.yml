@@ -1,0 +1,14 @@
+version: '2'
+services:
+  jdk-9:
+    image: openjdk:9-jdk
+    volumes:
+      - ./tools:/tools
+  jdk-8:
+    image: openjdk:8-jdk
+    volumes:
+      - ./tools:/tools
+  jdk-7:
+    image: openjdk:7-jdk
+    volumes:
+      - ./tools:/tools
