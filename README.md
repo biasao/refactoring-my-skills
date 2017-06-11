@@ -20,7 +20,7 @@ For instance, suppose that you want to run the code at `assignments/hackerrank/a
 
 ```sh
 cd assignments/hackerrank/the-coin-change-problem
-../../../tools/runner-java input1.txt output1.txt
+../../../tools/runner-with-input input1.txt output1.txt
 ```
 
 You should see the following output:
