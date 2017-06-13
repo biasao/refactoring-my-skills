@@ -1,0 +1,3 @@
+# Select ubuntu as the base image
+FROM openjdk:8-jdk
+ENV PATH="${PATH}:/tools"
