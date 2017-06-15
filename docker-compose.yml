@@ -12,3 +12,9 @@ services:
     volumes:
       - ./tools:/tools
       - ./assignments:/assignments
+
+  jdk-7:
+    build: ./docker/jdk7
+    volumes:
+      - ./tools:/tools
+      - ./assignments:/assignments
