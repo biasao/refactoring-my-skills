@@ -67,3 +67,19 @@ Checking output ...
 ----------------------------------------
 Test passed!
 ```
+
+## Running assignments using docker
+It is also possible to perform the assignments using docker containers. Currently docker-compose supports openjdk 7,8 and 9. The two runners -- `runner-with-input` and `runner-java-no-input` -- are included into the PATH. Hence you may perform the tests like this:
+
+```
+sudo docker-compose run --rm jdk-8 bash -c "
+        cd /assignments/hackerrank/algorithms/strings/anagram;
+        runner-with-input input1.txt output1.txt
+        "
+```
+
+This is a one-timer execution, after that container will be destroyed -- `--rm` takes care of that. If you want to interact within the container, you may connect to it like this:
+
+`sudo docker-compose run jdk-8 /bin/bash`
+
+All the assignments are mapped to a volume at `/assignments`.
