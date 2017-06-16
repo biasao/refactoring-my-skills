@@ -83,3 +83,14 @@ This is a one-timer execution, after that container will be destroyed -- `--rm` 
 `sudo docker-compose run jdk-8 /bin/bash`
 
 All the assignments are mapped to a volume at `/assignments`.
+
+### Using JShell for Read–eval–print loop (REPL)
+Java 9 features a REPL for statements interpretation called `jshell`. Using this tool it is possible to test code snippets rapidly without creating a project. The `docker-compose` offers basic support for `jshell`:
+
+`docker-compose run --rm jshell`
+
+It is also possible to load a java classes upon `jshell` opening, by setting the path to them:
+
+`docker-compose run --rm jshell jshell assignments/hackerrank/algorithms/strings/anagram/*`
+
+Once loaded it is possible to `/list` them and use or execute any piece of code: 

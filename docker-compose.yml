@@ -1,6 +1,13 @@
 version: '2'
 services:
 
+  jshell:
+    image: openjdk:9-jdk
+    volumes:
+      - ./tools:/tools
+      - ./assignments:/assignments
+    command: jshell
+
   jdk-9:
     image: openjdk:9-jdk
     volumes:
